@@ -2,6 +2,7 @@ node_modules/
 dist/
 .astro/
 public/sql-wasm.wasm
+.vercel/
 .env
 .env.production
 .DS_Store

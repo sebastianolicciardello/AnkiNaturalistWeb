@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@astrojs/node": "^11.1.14",
+    "@astrojs/vercel": "^11.0.22",
     "anki-apkg-export": "^5.0.0",
     "astro": "^7.4.13"
   },
