@@ -1,0 +1,31 @@
+{
+  "name": "ankinaturalist-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Crea un mazzo AnkiDroid (.apkg) dalle tue osservazioni iNaturalist.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start:prod": "node ./dist/server/entry.mjs",
+    "check": "astro check",
+    "copy:wasm": "node scripts/copy-wasm.mjs",
+    "postinstall": "npm run copy:wasm",
+    "predev": "npm run copy:wasm",
+    "prebuild": "npm run copy:wasm"
+  },
+  "dependencies": {
+    "@astrojs/node": "^11.1.14",
+    "anki-apkg-export": "^5.0.0",
+    "astro": "^7.4.13"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "typescript": "^6.0.3"
+  }
+}

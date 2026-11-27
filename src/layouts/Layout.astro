@@ -1,0 +1,40 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'AnkiNaturalist Web — le tue osservazioni iNaturalist in AnkiDroid',
+  description = 'Crea un mazzo AnkiDroid (.apkg) dalle tue osservazioni iNaturalist: foto, nomi, tassonomia e attribuzioni, senza sincronizzazioni e senza account.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#173c2b" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+    <slot />
+  </body>
+</html>

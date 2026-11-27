@@ -1,0 +1,867 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {
+  DEFAULT_LIMIT,
+  LOCALE_OPTIONS,
+  MAX_LIMIT,
+  MIN_LIMIT,
+  PHOTO_SIZE_OPTIONS,
+  QUALITY_OPTIONS,
+} from '../lib/types';
+---
+
+<Layout>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="/" aria-label="AnkiNaturalist Web, torna all'inizio">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" role="presentation">
+            <path
+              d="M8 28c0-10 7-18 24-20-1 14-8 22-18 22-3 0-6-1-6-2Z"
+              fill="currentColor"
+            ></path>
+            <path
+              d="M11 31c4-8 9-12 17-16"
+              fill="none"
+              stroke="#f5f2e8"
+              stroke-width="2.4"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+        </span>
+        <span class="brand-name">Anki<span>Naturalist</span></span>
+      </a>
+
+      <nav class="site-nav" aria-label="Navigazione principale">
+        <a href="#come-funziona">Come funziona</a>
+        <a href="#domande">Domande</a>
+        <a
+          class="nav-cta"
+          href="https://www.inaturalist.org"
+          target="_blank"
+          rel="noreferrer"
+        >
+          iNaturalist
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M5 3h8v8M13 3 4 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            Flashcard per AnkiDroid
+          </p>
+          <h1 id="hero-title">
+            Le tue osservazioni,<br />
+            <em>da riconoscere a memoria.</em>
+          </h1>
+          <p class="hero-lede">
+            Trasforma il tuo quaderno iNaturalist in un mazzo Anki pronto da
+            studiare: foto, nomi scientifici e comuni, tassonomia, data e
+            attribuzione. Tutto in un file <strong>.apkg</strong>, senza account
+            e senza sincronizzazioni.
+          </p>
+
+          <form id="search-form" class="search-card" novalidate>
+            <label class="sr-only" for="username">Nickname iNaturalist</label>
+            <div class="search-input-wrap">
+              <span class="search-at" aria-hidden="true">@</span>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                inputmode="text"
+                placeholder="il tuo nickname iNaturalist"
+                autocomplete="username"
+                autocapitalize="none"
+                spellcheck="false"
+                aria-describedby="form-error"
+              />
+              <button id="search-button" class="btn btn-primary" type="submit">
+                <span id="search-button-label">Cerca</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="M4 10h11M11 5l5 5-5 5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div class="search-help">
+              <p id="form-error" class="form-error" role="alert" hidden></p>
+              <p class="search-example">
+                Non hai un nickname a portata di mano?
+                <button id="example-user" class="link-button" type="button">
+                  Prova con @kueda
+                </button>
+              </p>
+            </div>
+          </form>
+
+          <ul class="hero-points">
+            <li>
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="m2.5 8.5 3.4 3.4 7.6-8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+              Nessun account richiesto
+            </li>
+            <li>
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="m2.5 8.5 3.4 3.4 7.6-8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+              Attribuzioni incluse
+            </li>
+            <li>
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="m2.5 8.5 3.4 3.4 7.6-8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+              Pronto per AnkiDroid
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="specimen-stack">
+            <div class="specimen-card specimen-card-back">
+              <span class="specimen-back-kicker">Scheda di campo</span>
+              <span class="specimen-back-title">AnkiNaturalist</span>
+            </div>
+
+            <div class="specimen-card specimen-card-main">
+              <div class="specimen-topline">
+                <span>Anteprima carta</span>
+                <span class="specimen-number">#042</span>
+              </div>
+
+              <div class="specimen-photo">
+                <svg viewBox="0 0 360 300" role="presentation">
+                  <defs>
+                    <linearGradient id="fernLeaf" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0" stop-color="#6c9d72"></stop>
+                      <stop offset="1" stop-color="#2c6246"></stop>
+                    </linearGradient>
+                    <radialGradient id="fernGlow" cx="50%" cy="45%" r="60%">
+                      <stop offset="0" stop-color="#fbf7e7"></stop>
+                      <stop offset="1" stop-color="#e9e3cf"></stop>
+                    </radialGradient>
+                  </defs>
+                  <rect width="360" height="300" fill="url(#fernGlow)"></rect>
+                  <circle cx="286" cy="58" r="46" fill="#dfe8c9" opacity=".75"></circle>
+                  <circle cx="70" cy="242" r="58" fill="#e5dfc9" opacity=".8"></circle>
+                  <g
+                    fill="none"
+                    stroke="#2b5a3e"
+                    stroke-width="4.4"
+                    stroke-linecap="round"
+                  >
+                    <path d="M176 262c-9-58-5-118 26-184"></path>
+                  </g>
+                  <g fill="url(#fernLeaf)">
+                    <path d="M172 230c-32-10-64-5-90 15 28 15 61 9 90-15Z"></path>
+                    <path d="M176 230c30-16 62-18 88-2-23 19-58 22-88 2Z"></path>
+                    <path d="M170 206c-28-8-57-3-80 14 25 13 55 8 80-14Z"></path>
+                    <path d="M174 206c26-13 54-14 77 0-20 16-51 18-77 0Z"></path>
+                    <path d="M168 182c-24-6-49 0-68 14 21 11 47 6 68-14Z"></path>
+                    <path d="M172 182c23-10 47-10 66 3-18 13-44 14-66-3Z"></path>
+                    <path d="M167 158c-20-4-40 1-56 13 18 9 39 4 56-13Z"></path>
+                    <path d="M171 158c19-8 39-7 55 4-15 10-37 11-55-4Z"></path>
+                    <path d="M167 135c-16-3-32 2-44 11 14 7 31 3 44-11Z"></path>
+                    <path d="M171 135c15-6 31-5 43 4-12 8-29 8-43-4Z"></path>
+                    <path d="M169 113c-12-2-24 2-33 9 11 5 23 2 33-9Z"></path>
+                    <path d="M173 113c11-5 23-3 32 4-9 6-22 6-32-4Z"></path>
+                    <path d="M174 92c-8-1-16 2-22 6 7 4 16 2 22-6Z"></path>
+                    <path d="M178 92c7-3 15-2 21 2-6 4-14 4-21-2Z"></path>
+                    <path d="M182 70c-4 0-9 1-12 4 4 2 9 1 12-4Z"></path>
+                    <path d="M186 70c4-1 8 0 11 2-3 2-8 2-11-2Z"></path>
+                  </g>
+                  <g
+                    fill="none"
+                    stroke="#dce8cf"
+                    stroke-width="1.3"
+                    opacity=".65"
+                    stroke-linecap="round"
+                  >
+                    <path d="M166 231c-22-4-44-1-66 8"></path>
+                    <path d="M178 231c22-10 45-11 66-2"></path>
+                    <path d="M165 206c-19-3-38 0-57 8"></path>
+                    <path d="M176 206c19-8 38-9 57-1"></path>
+                    <path d="M164 182c-16-2-32 1-48 8"></path>
+                    <path d="M174 182c16-5 32-6 48 1"></path>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="specimen-meta">
+                <span>Parco del Ticino</span>
+                <span>12 maggio 2026</span>
+              </div>
+
+              <div class="specimen-question">Quale specie è stata osservata?</div>
+
+              <div class="specimen-answer">
+                <span class="specimen-latin">Polypodium vulgare</span>
+                <span class="specimen-common">Felce dolce</span>
+              </div>
+            </div>
+
+            <div class="floating-chip floating-chip-a">
+              <span class="chip-dot"></span>
+              Research Grade
+            </div>
+            <div class="floating-chip floating-chip-b">
+              <svg viewBox="0 0 18 18" aria-hidden="true">
+                <path
+                  d="M9 1.5 15.5 4v4.4c0 4-2.8 6.8-6.5 8.1-3.7-1.3-6.5-4.1-6.5-8.1V4L9 1.5Z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"
+                ></path>
+                <path
+                  d="m6 9 2.1 2.1L12.4 7"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+              AnkiDroid ready
+            </div>
+          </div>
+          <p class="hero-art-caption">
+            Ogni carta include foto, tassonomia, data, luogo e licenza della foto.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="workspace"
+      class="workspace"
+      hidden
+      aria-labelledby="workspace-title"
+    >
+      <div class="shell">
+        <div class="workspace-head">
+          <div>
+            <p class="eyebrow">Il tuo quaderno digitale</p>
+            <h2 id="workspace-title">Prepara il mazzo</h2>
+          </div>
+          <p class="workspace-intro">
+            Scegli quante e quali osservazioni includere. Dopo l'anteprima, il
+            mazzo viene composto direttamente in questa scheda.
+          </p>
+        </div>
+
+        <div id="profile-section" class="profile-card" hidden>
+          <div class="profile-avatar-wrap">
+            <img id="profile-avatar" class="profile-avatar" alt="" hidden />
+            <div id="profile-initials" class="profile-initials" aria-hidden="true"></div>
+          </div>
+          <div class="profile-copy">
+            <h3 id="profile-name">—</h3>
+            <p id="profile-login" class="profile-login">—</p>
+            <p id="profile-stats" class="profile-stats"></p>
+          </div>
+          <div class="profile-actions">
+            <a
+              id="profile-link"
+              class="btn btn-ghost btn-small"
+              href="https://www.inaturalist.org"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Vedi profilo
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="M5 3h8v8M13 3 4 12"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </a>
+            <button id="change-user" class="link-button" type="button">
+              Cambia utente
+            </button>
+          </div>
+        </div>
+
+        <section
+          id="options-section"
+          class="panel options-panel"
+          aria-labelledby="options-title"
+        >
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Filtri e contenuti</p>
+              <h3 id="options-title">Cosa mettiamo nel mazzo?</h3>
+            </div>
+            <p class="panel-note">Puoi cambiare le opzioni e rivedere l'anteprima.</p>
+          </div>
+
+          <div class="options-grid">
+            <div class="field field-span-2">
+              <label class="field-label" for="quality-select">Qualità</label>
+              <select id="quality-select">
+                {
+                  QUALITY_OPTIONS.map((option) => (
+                    <option value={option.value}>{option.label}</option>
+                  ))
+                }
+              </select>
+              <p class="field-hint">Il grado assegnato dalla community di iNaturalist.</p>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="limit-input">Numero massimo</label>
+              <input
+                id="limit-input"
+                type="number"
+                min={MIN_LIMIT}
+                max={MAX_LIMIT}
+                step="1"
+                value={DEFAULT_LIMIT}
+                inputmode="numeric"
+              />
+              <p class="field-hint">Da {MIN_LIMIT} a {MAX_LIMIT} osservazioni.</p>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="locale-select">Lingua dei nomi</label>
+              <select id="locale-select">
+                {
+                  LOCALE_OPTIONS.map((option) => (
+                    <option value={option.value}>{option.label}</option>
+                  ))
+                }
+              </select>
+              <p class="field-hint">Nomi comuni restituiti da iNaturalist.</p>
+            </div>
+
+            <div class="field field-span-2">
+              <label class="field-label" for="photo-size-select">Dimensione foto</label>
+              <select id="photo-size-select">
+                {
+                  PHOTO_SIZE_OPTIONS.map((option) => (
+                    <option value={option.value} selected={option.value === 'medium'}>
+                      {option.label} · {option.hint}
+                    </option>
+                  ))
+                }
+              </select>
+              <p class="field-hint">Le immagini vengono ridimensionate da iNaturalist.</p>
+            </div>
+
+            <div class="field field-span-2">
+              <span class="field-label">
+                Periodo <span class="field-optional">facoltativo</span>
+              </span>
+              <div class="date-range">
+                <label class="date-box">
+                  <span>Dal</span>
+                  <input id="from-date" type="date" aria-label="Data iniziale" />
+                </label>
+                <label class="date-box">
+                  <span>Al</span>
+                  <input id="to-date" type="date" aria-label="Data finale" />
+                </label>
+              </div>
+              <p id="date-error" class="field-error" role="alert" hidden></p>
+            </div>
+
+            <div class="field field-span-4">
+              <label class="field-label" for="deck-name">Nome del mazzo</label>
+              <input
+                id="deck-name"
+                type="text"
+                maxlength="80"
+                placeholder="Comparirà in AnkiDroid"
+              />
+              <p class="field-hint">
+                Puoi usare un nome qualsiasi; verrà creato come mazzo principale.
+              </p>
+            </div>
+          </div>
+
+          <div class="switches">
+            <label class="switch-row">
+              <span class="switch">
+                <input id="include-without-photo" type="checkbox" />
+                <span class="switch-track" aria-hidden="true"></span>
+              </span>
+              <span class="switch-copy">
+                <strong>Includi osservazioni senza foto</strong>
+                <small>Riceveranno un'immagine segnaposto neutra.</small>
+              </span>
+            </label>
+
+            <label class="switch-row">
+              <span class="switch">
+                <input id="include-descriptions" type="checkbox" checked />
+                <span class="switch-track" aria-hidden="true"></span>
+              </span>
+              <span class="switch-copy">
+                <strong>Descrizioni originali</strong>
+                <small>Il testo che hai scritto sull'osservazione.</small>
+              </span>
+            </label>
+
+            <label class="switch-row">
+              <span class="switch">
+                <input id="include-identifications" type="checkbox" checked />
+                <span class="switch-track" aria-hidden="true"></span>
+              </span>
+              <span class="switch-copy">
+                <strong>Identificazioni della community</strong>
+                <small>Fino a sei proposte, con eventuali commenti.</small>
+              </span>
+            </label>
+          </div>
+
+          <div class="generate-row">
+            <div class="generate-copy">
+              <p id="generate-summary" class="generate-summary">
+                Cerca un utente per iniziare.
+              </p>
+              <p class="generate-note">
+                Il file viene creato nel browser: nessuna osservazione viene
+                caricata sui nostri server.
+              </p>
+            </div>
+            <button id="generate-button" class="btn btn-primary btn-large" type="button" disabled>
+              <span id="generate-button-label">Crea il mazzo</span>
+              <svg class="btn-icon" viewBox="0 0 20 20" aria-hidden="true">
+                <path
+                  d="M10 3v10m0 0 4-4m-4 4L6 9M3 16h14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <section
+          id="preview-section"
+          class="panel preview-panel"
+          aria-labelledby="preview-title"
+        >
+          <div class="panel-head preview-head">
+            <div>
+              <p class="eyebrow">Cosa finirà nel mazzo</p>
+              <h3 id="preview-title">Anteprima delle osservazioni</h3>
+            </div>
+            <div class="preview-meta">
+              <p id="preview-status" class="preview-status" aria-live="polite">
+                In attesa della ricerca…
+              </p>
+              <p id="preview-summary" class="preview-summary"></p>
+            </div>
+          </div>
+
+          <div id="preview-grid" class="preview-grid" aria-busy="false"></div>
+
+          <div id="preview-error" class="inline-alert" role="alert" hidden>
+            <div>
+              <strong>Anteprima non disponibile</strong>
+              <p id="preview-error-message"></p>
+            </div>
+            <button id="preview-retry" class="btn btn-ghost btn-small" type="button">
+              Riprova
+            </button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section
+      id="progress-section"
+      class="state-section"
+      hidden
+      aria-labelledby="progress-title"
+    >
+      <div class="shell">
+        <div class="state-card">
+          <div class="state-icon state-icon-progress" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <path
+                d="M6 24C6 14 13 7 27 5c-1 12-7 19-16 19-2 0-5-1-5-1Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M9 27c3-7 8-11 14-14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              ></path>
+            </svg>
+          </div>
+          <p class="eyebrow">Generazione del mazzo</p>
+          <h2 id="progress-title">Raccolta delle osservazioni</h2>
+          <p id="progress-message" class="state-message" aria-live="polite">
+            Recupero le osservazioni da iNaturalist…
+          </p>
+
+          <div class="progress-meta">
+            <span id="progress-user" class="meta-chip"></span>
+            <span id="progress-deck" class="meta-chip meta-chip-strong"></span>
+          </div>
+
+          <div
+            id="progress-bar"
+            class="progress-track"
+            role="progressbar"
+            aria-label="Avanzamento della generazione"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+
+          <div class="progress-foot">
+            <span id="progress-count" class="progress-count"></span>
+            <button id="cancel-button" class="btn btn-ghost btn-small" type="button">
+              Annulla
+            </button>
+          </div>
+
+          <p class="fine-print">
+            Tieni questa scheda aperta: le foto vengono scaricate e assemblate
+            qui nel browser.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="result-section"
+      class="state-section"
+      hidden
+      aria-labelledby="result-title"
+    >
+      <div class="shell">
+        <div class="state-card result-card">
+          <div class="result-seal" aria-hidden="true">
+            <svg viewBox="0 0 44 44">
+              <path
+                d="m11 23 8 8 15-18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </div>
+          <p class="eyebrow">Mazzo completato</p>
+          <h2 id="result-title">Pronto per AnkiDroid</h2>
+          <p id="result-stats" class="result-stats"></p>
+          <p id="result-details" class="state-message"></p>
+
+          <a id="download-link" class="btn btn-primary btn-large" download>
+            Scarica il mazzo .apkg
+            <svg class="btn-icon" viewBox="0 0 20 20" aria-hidden="true">
+              <path
+                d="M10 3v10m0 0 4-4m-4 4L6 9M3 16h14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </a>
+
+          <div class="result-meta">
+            <div>
+              <span>Mazzo</span>
+              <p id="result-deck"></p>
+            </div>
+            <div>
+              <span>File</span>
+              <p id="result-filename"></p>
+            </div>
+          </div>
+
+          <div id="result-warning" class="inline-alert warning" hidden>
+            <div>
+              <h3 id="result-warning-title"></h3>
+              <ul id="result-warning-list"></ul>
+            </div>
+          </div>
+
+          <div class="result-next">
+            <p>
+              Apri AnkiDroid, scegli <strong>Importa</strong> e seleziona il file
+              scaricato. Se importi di nuovo lo stesso mazzo, le note esistenti
+              verranno aggiornate.
+            </p>
+            <button id="new-deck-button" class="btn btn-ghost" type="button">
+              Crea un altro mazzo
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="error-section"
+      class="state-section"
+      hidden
+      aria-labelledby="error-title"
+    >
+      <div class="shell">
+        <div class="state-card error-card">
+          <div class="state-icon state-icon-error" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <path
+                d="M16 6v13M16 25.5v.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+              ></path>
+            </svg>
+          </div>
+          <p class="eyebrow">Generazione interrotta</p>
+          <h2 id="error-title">Qualcosa non ha funzionato</h2>
+          <p id="error-message" class="state-message" role="alert"></p>
+          <div class="button-row">
+            <button id="error-retry" class="btn btn-primary" type="button">
+              Riprova
+            </button>
+            <button id="error-back" class="btn btn-ghost" type="button">
+              Torna alle opzioni
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="come-funziona" class="how" aria-labelledby="how-title">
+      <div class="shell">
+        <div class="how-head">
+          <div>
+            <p class="eyebrow eyebrow-light">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              Dal campo allo schermo
+            </p>
+            <h2 id="how-title">Tre passi, un mazzo.</h2>
+          </div>
+          <p>
+            Niente esportazioni manuali, niente sincronizzazioni: solo le tue
+            osservazioni, ordinate e pronte da ripassare.
+          </p>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num">01</span>
+            <h3>Trova il tuo profilo</h3>
+            <p>
+              Inserisci il nickname iNaturalist: recuperiamo osservazioni
+              pubbliche, foto e nomi nella lingua che preferisci.
+            </p>
+          </li>
+          <li class="step">
+            <span class="step-num">02</span>
+            <h3>Scegli cosa studiare</h3>
+            <p>
+              Filtra per qualità, periodo e numero di carte. Decidi se includere
+              descrizioni, identificazioni e osservazioni senza foto.
+            </p>
+          </li>
+          <li class="step">
+            <span class="step-num">03</span>
+            <h3>Scarica e importa</h3>
+            <p>
+              Genera il file <strong>.apkg</strong> e aprilo con AnkiDroid. Le
+              carte contengono foto, tassonomia, luogo e attribuzione.
+            </p>
+          </li>
+        </ol>
+
+        <div class="privacy-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 2.5 20 6v6.2c0 5.4-3.7 9.1-8 10.8-4.3-1.7-8-5.4-8-10.8V6l8-3.5Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="m8 12 2.8 2.8L16.5 9"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+          <p>
+            <strong>Privacy in chiaro.</strong> La ricerca e la generazione
+            avvengono nel browser. L'unico passaggio dal nostro server è il proxy
+            delle foto, necessario per scaricarle senza blocchi CORS. Non
+            conserviamo nickname, osservazioni o mazzi.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="domande" class="faq" aria-labelledby="faq-title">
+      <div class="shell faq-grid">
+        <div class="faq-head">
+          <p class="eyebrow">Domande frequenti</p>
+          <h2 id="faq-title">Prima di importare.</h2>
+          <p>
+            Tutto quello che serve sapere su licenze, privacy e funzionamento
+            del mazzo.
+          </p>
+        </div>
+
+        <div class="faq-list">
+          <details open>
+            <summary>Servono un account o una sincronizzazione?</summary>
+            <p>
+              No. Bastano un browser e il tuo nickname pubblico di iNaturalist.
+              L'app legge le osservazioni tramite l'API pubblica e crea il file
+              localmente: non esistono login, server Anki o sincronizzazioni.
+            </p>
+          </details>
+          <details>
+            <summary>Che formato ha il file scaricato?</summary>
+            <p>
+              Un archivio <strong>.apkg</strong> con un mazzo e un note type
+              dedicato, «AnkiNaturalist Observation». Puoi aprirlo con AnkiDroid
+              o con Anki desktop. Le note usano l'ID dell'osservazione, quindi
+              reimportando lo stesso mazzo gli aggiornamenti sostituiscono le
+              note esistenti.
+            </p>
+          </details>
+          <details>
+            <summary>Le foto e le licenze sono rispettate?</summary>
+            <p>
+              Ogni carta mostra l'attribuzione e la licenza fornite da
+              iNaturalist. Le foto restano di proprietà dei rispettivi autori:
+              il mazzo è per uso personale e di studio. Verifica sempre la
+              licenza prima di ridistribuire un'immagine o un mazzo.
+            </p>
+          </details>
+          <details>
+            <summary>Perché alcune osservazioni vengono saltate?</summary>
+            <p>
+              Se una foto non è raggiungibile o l'osservazione non ne ha, la
+              carta viene saltata — a meno che tu non attivi «Includi
+              osservazioni senza foto», che usa un'immagine segnaposto. Alla fine
+              trovi l'elenco delle osservazioni escluse.
+            </p>
+          </details>
+          <details>
+            <summary>Quante osservazioni posso includere?</summary>
+            <p>
+              Da 1 a 2.000 per mazzo. Con molte foto e dimensioni alte il file
+              può diventare pesante e la generazione richiede più tempo. Per
+              iniziare, 200–300 osservazioni in dimensione «Consigliata» sono un
+              buon compromesso.
+            </p>
+          </details>
+          <details>
+            <summary>Quali dati passano dal server?</summary>
+            <p>
+              Solo le immagini richieste al proxy <code>/api/photo</code>, che
+              accetta esclusivamente URL dei CDN fotografici di iNaturalist. Le
+              richieste all'API e la costruzione del file avvengono nel tuo
+              browser. Non usiamo analytics né cookie.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark brand-mark-small" aria-hidden="true">
+          <svg viewBox="0 0 40 40" role="presentation">
+            <path
+              d="M8 28c0-10 7-18 24-20-1 14-8 22-18 22-3 0-6-1-6-2Z"
+              fill="currentColor"
+            ></path>
+            <path
+              d="M11 31c4-8 9-12 17-16"
+              fill="none"
+              stroke="#f5f2e8"
+              stroke-width="2.4"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+        </span>
+        <div>
+          <p class="footer-title">AnkiNaturalist Web</p>
+          <p class="footer-sub">Un quaderno di campo per la memoria.</p>
+        </div>
+      </div>
+      <p class="footer-note">
+        Dati e foto da <a href="https://www.inaturalist.org" target="_blank" rel="noreferrer">iNaturalist</a>.
+        Non affiliato a iNaturalist, Anki o AnkiDroid. Le osservazioni restano
+        dei rispettivi autori.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    import '../scripts/app';
+  </script>
+</Layout>
